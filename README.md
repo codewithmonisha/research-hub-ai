@@ -14,7 +14,7 @@ Welcome to the Research Hub AI project! This platform is designed to help resear
 3. [Add any specific instructions for running your code here]
 
 ## Built With
-* [List your technologies here, e.g., HTML, CSS, JavaScript, Python]
+* Figma HTML, CSS, JavaScript, Python]
 
 ## License
 This project is open-source and available for research purposes.
