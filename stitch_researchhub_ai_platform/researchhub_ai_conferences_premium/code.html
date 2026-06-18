@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Conference Tracker | ResearchHub AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Hanken Grotesk', sans-serif; }
+        .font-mono { font-family: 'Geist', sans-serif; }
+        
+        /* Glassmorphism custom styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #E5E7EB;
+        }
+        
+        .premium-border-glow {
+            position: relative;
+        }
+        .premium-border-glow::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(to bottom right, #3525cd, #712ae2);
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .premium-border-glow:hover::after {
+            opacity: 0.15;
+        }
+
+        .ranking-a-star { background: linear-gradient(135deg, #3525cd 0%, #712ae2 100%); color: white; }
+        .ranking-a { background: #eaedff; color: #3525cd; border: 1px solid #c3c0ff; }
+        .ranking-b { background: #f2f3ff; color: #464555; border: 1px solid #dae2fd; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dae2fd; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c7c4d8; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-tint": "#4d44e3",
+                        "secondary-container": "#8a4cfc",
+                        "inverse-on-surface": "#eef0ff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c7c4d8",
+                        "on-background": "#131b2e",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-container-high": "#e2e7ff",
+                        "surface": "#faf8ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary-container": "#a44100",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#25005a",
+                        "outline": "#777587",
+                        "secondary-fixed": "#eaddff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#283044",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container": "#eaedff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#e2dfff",
+                        "surface-dim": "#d2d9f4",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "secondary": "#712ae2",
+                        "primary": "#3525cd",
+                        "inverse-primary": "#c3c0ff",
+                        "tertiary": "#7e3000",
+                        "on-tertiary-fixed": "#351000",
+                        "primary-container": "#4f46e5",
+                        "on-surface": "#131b2e",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-container-highest": "#dae2fd",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-low": "#f2f3ff",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "background": "#faf8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "giant": "80px",
+                        "xl": "32px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display": ["Hanken Grotesk"],
+                        "mono": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "mono": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-sm": ["18px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen">
+<!-- Sidebar (Shared Component Style) -->
+<aside class="bg-surface-container-low/70 backdrop-blur-md h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/30 flex flex-col p-md space-y-xs z-50">
+<div class="px-md py-lg">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Research Workspace</span>
+<p class="font-label-md text-label-md text-on-surface-variant/70">Enterprise Tier</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-md text-label-md">Papers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+<span class="font-label-md text-label-md">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="font-label-md text-label-md">Collaborations</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary/10 text-primary rounded-lg font-bold scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-md text-label-md">Conferences</span>
+</a>
+</nav>
+<div class="pt-md border-t border-outline-variant/30 mt-auto space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- Header / Top Bar -->
+<header class="bg-surface/70 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-xl py-md max-w-7xl mx-auto w-full">
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface">Conference Tracker</h1>
+<p class="font-body-sm text-on-surface-variant/60">Manage your submissions and monitor top-tier academic deadlines.</p>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="pl-10 pr-md py-sm bg-surface-container-low border border-outline-variant/50 rounded-lg font-body-md focus:ring-2 focus:ring-primary/20 outline-none w-64 transition-all" placeholder="Search venues..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md hover:bg-primary-container transition-colors flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Track
+                    </button>
+</div>
+</div>
+</header>
+<!-- Dynamic Content Canvas -->
+<div class="max-w-7xl mx-auto px-xl py-xl space-y-xl">
+<!-- Filter Bar & Quick Stats -->
+<section class="grid grid-cols-12 gap-lg items-end">
+<div class="col-span-12 md:col-span-8 flex flex-wrap items-center gap-md">
+<div class="flex items-center bg-surface-container border border-outline-variant/30 rounded-full p-1">
+<button class="px-md py-1.5 bg-white shadow-sm rounded-full font-label-md text-primary">All Venues</button>
+<button class="px-md py-1.5 hover:bg-surface-variant/50 rounded-full font-label-md text-on-surface-variant/70 transition-colors">Machine Learning</button>
+<button class="px-md py-1.5 hover:bg-surface-variant/50 rounded-full font-label-md text-on-surface-variant/70 transition-colors">NLP</button>
+<button class="px-md py-1.5 hover:bg-surface-variant/50 rounded-full font-label-md text-on-surface-variant/70 transition-colors">Computer Vision</button>
+</div>
+<div class="flex items-center gap-sm bg-surface-container border border-outline-variant/30 rounded-lg px-md py-1.5">
+<span class="font-label-md text-on-surface-variant/50">Rank:</span>
+<select class="bg-transparent border-none p-0 focus:ring-0 font-label-md text-on-surface">
+<option>All Ranks</option>
+<option>A*</option>
+<option>A</option>
+<option>B</option>
+</select>
+</div>
+<button class="flex items-center gap-sm text-on-surface-variant/70 font-label-md hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        More Filters
+                    </button>
+</div>
+<div class="col-span-12 md:col-span-4 flex justify-end gap-md">
+<div class="flex -space-x-3">
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="Profile avatar of a researcher with a minimalist artistic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzraLU_SljyZQSx4SzLYaC6__tApvvplgoGeNvRZjjQjmWx5Kjx1fp5EW5tjoBZviclvNK7WfEKT-wMSJsbG_f629JxtwuLJATM3UYqfpIbRvlvw8Zr6wOocp3mY00dUjEl8efP9NCNxBLiM2AB3YJt-ibY_MKBBVrQOP6kPZ0CUKpY8QyoxlxuLSzoLE_xz4YZZX-66nt_UprP-8wUATn7gy4yOh7xik3VaGVwMKTYiWIDtfw9fNvrJ7sOrCAYr5xT4yF3rHBUHY"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="Profile avatar of another researcher with a minimalist artistic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3HgftKfxCtsJff9LA2IN0XNQy4macigV0IuFWVsWMiehguaKaFfcBLpszJ0U1AMT_I45W30A6DXF0TBpUQ5DFFSCorE0Qo2Z-RHx8iiF4hYhNcA9LaWf-yTrD-O9lNGGEHDCj11bWgUBIxooNCH2cHiRC_TWLAT75f3OKX-Z0EH3yL0LfHUPztI22RJyvG2MZFm12TNVcpGdzdaT3lWUsUImc9rACV9E4c4SV96T8vBC81d4MHNujF-13Q42pr1YDjE7DFzlDn4Q"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="Profile avatar of a third researcher with a minimalist artistic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZXclSiZPPkd_dMTBOliKsC-84r6AfSswv-yGfvagePOCzSnaXijIc4Z0A8Hw55RWXfon_7jpkDdpXwpLtqV01EIOJt25LrQatpwiCagGOJ_i16WkVk5ellfMj6QKFijX80RjOF1Q6mEM-J1gR9OAgkoKs36SO6NTqhBcaa7U9rfmtUvQpDnCX1eAU4nNVKx4sirIQ-jQhhTfLnweHFlIYSsZITg6jlkp3mYUaD99yA1SU1o_LaUXUz-4JHSbUtfcq0J5lWfdX40k"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold text-on-surface-variant">+12</div>
+</div>
+<p class="text-on-surface-variant/60 font-label-md self-center">Active collaborators</p>
+</div>
+</section>
+<!-- Main Bento Grid for Conferences -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Conference Card 1 (A*) -->
+<div class="glass-card rounded-xl p-xl flex flex-col gap-lg group premium-border-glow">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="ranking-a-star px-sm py-0.5 rounded text-[10px] font-mono w-fit tracking-wider">RANK A*</span>
+<h3 class="font-headline-sm text-headline-sm">NeurIPS 2024</h3>
+<p class="font-body-md text-on-surface-variant/70">Vancouver, Canada</p>
+</div>
+<div class="bg-primary/5 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex justify-between items-end">
+<div class="space-y-xs">
+<p class="font-label-md text-on-surface-variant/50">Abstract Deadline</p>
+<p class="font-mono text-body-md font-medium">May 15, 2024</p>
+</div>
+<div class="text-right space-y-xs">
+<p class="font-label-md text-on-surface-variant/50 text-right">In 42 days</p>
+<span class="text-error font-mono text-body-md font-bold">URGENT</span>
+</div>
+</div>
+<div class="w-full bg-surface-variant/30 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[80%] rounded-full transition-all duration-1000"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md pt-md border-t border-outline-variant/30">
+<div>
+<p class="font-label-md text-on-surface-variant/50 mb-1">Acceptance Rate</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">25.6%</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-on-surface-variant/50 mb-1">Field</p>
+<div class="flex justify-end gap-xs flex-wrap">
+<span class="bg-surface-variant/50 px-xs py-0.5 rounded font-mono text-[10px]">ML</span>
+<span class="bg-surface-variant/50 px-xs py-0.5 rounded font-mono text-[10px]">AI</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Conference Card 2 (A) -->
+<div class="glass-card rounded-xl p-xl flex flex-col gap-lg group premium-border-glow">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="ranking-a px-sm py-0.5 rounded text-[10px] font-mono w-fit tracking-wider">RANK A</span>
+<h3 class="font-headline-sm text-headline-sm">ECCV 2024</h3>
+<p class="font-body-md text-on-surface-variant/70">Milan, Italy</p>
+</div>
+<div class="bg-primary/5 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex justify-between items-end">
+<div class="space-y-xs">
+<p class="font-label-md text-on-surface-variant/50">Full Paper Deadline</p>
+<p class="font-mono text-body-md font-medium">July 02, 2024</p>
+</div>
+<div class="text-right space-y-xs">
+<p class="font-label-md text-on-surface-variant/50 text-right">In 88 days</p>
+<span class="text-primary font-mono text-body-md font-bold">TRACKING</span>
+</div>
+</div>
+<div class="w-full bg-surface-variant/30 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary/40 h-full w-[45%] rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md pt-md border-t border-outline-variant/30">
+<div>
+<p class="font-label-md text-on-surface-variant/50 mb-1">Acceptance Rate</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">27.2%</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-on-surface-variant/50 mb-1">Field</p>
+<div class="flex justify-end gap-xs flex-wrap">
+<span class="bg-surface-variant/50 px-xs py-0.5 rounded font-mono text-[10px]">CV</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Recommendation Feature Card -->
+<div class="relative rounded-xl p-xl flex flex-col overflow-hidden bg-primary overflow-hidden text-on-primary">
+
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+<span class="font-label-md uppercase tracking-widest opacity-80">AI Suggestion</span>
+</div>
+<h3 class="font-headline-md text-headline-md leading-tight mb-md">Best fit for your current research: ICML 2024</h3>
+<p class="font-body-md opacity-90 flex-1">Based on your recent paper "Neural Differential Equations for Spatiotemporal Forecasting," we recommend ICML for your next submission.</p>
+<button class="mt-xl w-full bg-white text-primary py-md rounded-lg font-label-md font-bold hover:bg-on-primary-container transition-all flex items-center justify-center gap-md">
+                            Analyze Submission Chance
+                            <span class="material-symbols-outlined text-[18px]">trending_up</span>
+</button>
+</div>
+</div>
+<!-- Conference Card 3 (B) -->
+<div class="glass-card rounded-xl p-xl flex flex-col gap-lg group premium-border-glow">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="ranking-b px-sm py-0.5 rounded text-[10px] font-mono w-fit tracking-wider">RANK B</span>
+<h3 class="font-headline-sm text-headline-sm">AAAI 2025</h3>
+<p class="font-body-md text-on-surface-variant/70">Philadelphia, USA</p>
+</div>
+<div class="bg-primary/5 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex justify-between items-end">
+<div class="space-y-xs">
+<p class="font-label-md text-on-surface-variant/50">Full Paper Deadline</p>
+<p class="font-mono text-body-md font-medium">August 12, 2024</p>
+</div>
+<div class="text-right space-y-xs">
+<p class="font-label-md text-on-surface-variant/50 text-right">In 124 days</p>
+<span class="text-on-surface-variant/40 font-mono text-body-md font-bold">UPCOMING</span>
+</div>
+</div>
+<div class="w-full bg-surface-variant/30 h-1.5 rounded-full overflow-hidden">
+<div class="bg-outline-variant h-full w-[20%] rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md pt-md border-t border-outline-variant/30">
+<div>
+<p class="font-label-md text-on-surface-variant/50 mb-1">Acceptance Rate</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">21.0%</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-on-surface-variant/50 mb-1">Field</p>
+<div class="flex justify-end gap-xs flex-wrap">
+<span class="bg-surface-variant/50 px-xs py-0.5 rounded font-mono text-[10px]">GEN AI</span>
+<span class="bg-surface-variant/50 px-xs py-0.5 rounded font-mono text-[10px]">ROBOTICS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- List View Teaser / Sidebar Item -->
+<div class="col-span-1 lg:col-span-2 glass-card rounded-xl p-xl overflow-hidden relative">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-lg">
+<h3 class="font-headline-sm text-headline-sm">Submission Timeline</h3>
+<div class="flex items-center gap-md">
+<span class="flex items-center gap-xs font-label-md text-on-surface-variant/60">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Abstract
+                            </span>
+<span class="flex items-center gap-xs font-label-md text-on-surface-variant/60">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Final Paper
+                            </span>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex items-center gap-xl group cursor-pointer hover:bg-surface-variant/30 p-sm rounded-lg transition-colors">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-high rounded-lg flex flex-col items-center justify-center font-mono text-[10px] text-on-surface">
+<span class="font-bold text-lg">22</span>
+                                MAY
+                            </div>
+<div class="flex-1">
+<h4 class="font-body-md font-semibold text-on-surface group-hover:text-primary transition-colors">CVPR 2024 Final Submission</h4>
+<p class="font-label-md text-on-surface-variant/50">Computer Vision • Seattle, WA</p>
+</div>
+<div class="hidden md:block">
+<div class="flex items-center -space-x-2">
+<img class="w-6 h-6 rounded-full border border-white" data-alt="Small avatar of a contributor in a research project timeline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6EWY4vAciJEH5QlgEOX6SW_lE1Fq9ChWNPg4aynXlrQ5c9JX1Q3shtIi00seaAUYt0k1bg-diLro9p3EtYmPuLyrm-mNLhzCkSVhmwgoNxYGJny3BQJvpgv_SklPGNP5nUb9Kz1_60FNk6Oqoz7UkK_NVOrMm2o1Zr0HDHUkap5NqS1eYnCUataEXfunfCtLuKO1hYeTX24zn7B5emQBM_OX4zIx1yzqd7LumnRLYpIpyqXq6QL-C70umAobvN-eQAuizhhzGx54"/>
+<img class="w-6 h-6 rounded-full border border-white" data-alt="Small avatar of another contributor in a research project timeline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSAAVCKUWev56lc3zJ_qQ2dBGyRqODy_A8rA5BDGsViZ3Hcf5QYjI5YX0zk81QUkrS3x8MHrlgoZJ7BYOzWSKa4dSv6anp7ffyhfJ8bpOi4vrvH-zC2hms8QKDbsY6wGEIsAqEM9Pnt25T__ekhpg7D3fXtz4cHZ6081ADcsw94v0c-Vh5shY64Od6U83d_qkFYU20rzOCznwQFeT2kyfjG6tSqc01C1LmBlpFeIzxAu49wlAZg6TMGtKXzaGNk1Uy28e5GzZSKl8"/>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</button>
+</div>
+<div class="flex items-center gap-xl group cursor-pointer hover:bg-surface-variant/30 p-sm rounded-lg transition-colors">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container-high rounded-lg flex flex-col items-center justify-center font-mono text-[10px] text-on-surface">
+<span class="font-bold text-lg">08</span>
+                                JUN
+                            </div>
+<div class="flex-1">
+<h4 class="font-body-md font-semibold text-on-surface group-hover:text-primary transition-colors">KDD 2024 Notifications</h4>
+<p class="font-label-md text-on-surface-variant/50">Data Mining • Barcelona, Spain</p>
+</div>
+<div class="hidden md:block">
+<span class="px-md py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[10px] font-mono">REBUTTAL DUE</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="mt-giant border-t border-outline-variant/30 bg-surface py-xl">
+<div class="max-w-7xl mx-auto px-xl flex flex-col md:flex-row justify-between items-start gap-lg">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">ResearchHub AI</span>
+<p class="font-body-sm text-on-surface-variant/50 max-w-xs">The ultimate workspace for elite researchers. Track, analyze, and publish with precision.</p>
+</div>
+<div class="flex flex-col md:flex-row gap-xl">
+<div class="flex flex-col gap-sm">
+<span class="font-label-md font-bold text-on-surface">RESOURCES</span>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">API Docs</a>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">Methodology</a>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">Privacy</a>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-label-md font-bold text-on-surface">CONNECT</span>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">Twitter</a>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">LinkedIn</a>
+<a class="font-label-sm text-on-surface-variant/50 hover:text-primary transition-colors" href="#">GitHub</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-xl mt-lg pt-lg border-t border-outline-variant/10 flex justify-between">
+<p class="font-label-sm text-on-surface-variant/40">© 2024 ResearchHub AI. All rights reserved.</p>
+<div class="flex gap-md">
+<span class="w-2 h-2 rounded-full bg-green-400"></span>
+<span class="font-label-sm text-on-surface-variant/40">System Operational</span>
+</div>
+</div>
+</footer>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-xl right-xl w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-[24px]">add_task</span>
+<span class="absolute right-16 bg-inverse-surface text-inverse-on-surface px-md py-sm rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Add Tracked Paper</span>
+</button>
+<script>
+        // Micro-interaction for filter chips
+        document.querySelectorAll('button.rounded-full').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.closest('.flex')) {
+                    this.closest('.flex').querySelectorAll('button').forEach(b => {
+                        b.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+                        b.classList.add('text-on-surface-variant/70');
+                    });
+                    this.classList.add('bg-white', 'shadow-sm', 'text-primary');
+                    this.classList.remove('text-on-surface-variant/70');
+                }
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+</body></html>

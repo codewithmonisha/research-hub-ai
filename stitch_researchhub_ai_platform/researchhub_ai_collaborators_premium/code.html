@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResearchHub AI | Collaboration Network</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-tint": "#4d44e3",
+                    "secondary-container": "#8a4cfc",
+                    "inverse-on-surface": "#eef0ff",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#c7c4d8",
+                    "on-background": "#131b2e",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "surface-container-high": "#e2e7ff",
+                    "surface": "#faf8ff",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#0f0069",
+                    "tertiary-container": "#a44100",
+                    "on-surface-variant": "#464555",
+                    "on-secondary-fixed": "#25005a",
+                    "outline": "#777587",
+                    "secondary-fixed": "#eaddff",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#283044",
+                    "on-secondary-container": "#fffbff",
+                    "surface-container": "#eaedff",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#e2dfff",
+                    "surface-dim": "#d2d9f4",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcc",
+                    "secondary": "#712ae2",
+                    "primary": "#3525cd",
+                    "inverse-primary": "#c3c0ff",
+                    "tertiary": "#7e3000",
+                    "on-tertiary-fixed": "#351000",
+                    "primary-container": "#4f46e5",
+                    "on-surface": "#131b2e",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-variant": "#dae2fd",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#faf8ff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "on-tertiary-container": "#ffd2be",
+                    "on-primary-container": "#dad7ff",
+                    "surface-container-low": "#f2f3ff",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "background": "#faf8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "sm": "8px",
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "giant": "80px",
+                    "xl": "32px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "display": ["Hanken Grotesk"],
+                    "mono": ["Geist"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Geist"],
+                    "headline-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "mono": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["18px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf8ff;
+            color: #131b2e;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            background: rgba(250, 248, 255, 0.7);
+        }
+        .researcher-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .researcher-card:hover {
+            border-color: #c7c4d8;
+            transform: translateY(-2px);
+        }
+        .match-glow {
+            box-shadow: 0 0 12px rgba(77, 68, 227, 0.15);
+        }
+        .premium-btn {
+            background: linear-gradient(180deg, #4f46e5 0%, #712ae2 100%);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+        }
+        .premium-btn:hover {
+            opacity: 0.9;
+        }
+        .filter-chip {
+            transition: all 0.2s ease;
+        }
+        .filter-chip.active {
+            background-color: #3525cd;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<nav class="bg-surface/70 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant flex justify-between items-center px-xl py-md w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary">ResearchHub AI</span>
+<div class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant/60 hover:text-primary transition-colors font-label-md text-label-md" href="#">Features</a>
+<a class="text-on-surface-variant/60 hover:text-primary transition-colors font-label-md text-label-md" href="#">Pricing</a>
+<a class="text-on-surface-variant/60 hover:text-primary transition-colors font-label-md text-label-md" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant/60 hover:text-primary transition-colors font-label-md text-label-md">Login</button>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Sign Up</button>
+</div>
+</nav>
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col w-64 border-r border-outline-variant bg-surface-container-low/70 backdrop-blur-md sticky top-[72px] h-[calc(100vh-72px)] p-md space-y-xs shrink-0">
+<div class="mb-lg px-sm">
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary">Research Workspace</h3>
+<p class="text-on-surface-variant/70 font-label-md text-label-md uppercase tracking-wider mt-xs">Enterprise Tier</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Papers</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label-md text-label-md">AI Assistant</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary/10 text-primary rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-md text-label-md">Collaborations</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Conferences</span>
+</a>
+</nav>
+<button class="premium-btn text-white w-full py-md rounded-xl font-label-md text-label-md flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Project
+            </button>
+<div class="pt-lg border-t border-outline-variant space-y-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant/70 hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 p-xl lg:px-xxl max-w-[1200px] mx-auto">
+<!-- Header & Filters Section -->
+<header class="mb-xxl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Collaboration Network</h1>
+<p class="text-on-surface-variant mt-sm font-body-lg text-body-lg">Find the perfect researcher to augment your current workspace projects using AI-powered matching.</p>
+</div>
+</div>
+<!-- Minimalist Filters -->
+<div class="mt-xl flex flex-wrap items-center gap-md bg-surface-container-lowest p-sm rounded-xl border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-outline ml-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md flex-1 min-w-[200px]" placeholder="Search by research field or expertise..." type="text"/>
+<div class="h-6 w-px bg-outline-variant mx-sm"></div>
+<div class="flex gap-sm">
+<button class="filter-chip active px-lg py-sm rounded-lg text-label-md font-label-md border border-primary">All Experts</button>
+<button class="filter-chip px-lg py-sm rounded-lg text-label-md font-label-md bg-surface-container hover:bg-surface-container-high border border-outline-variant">Quantum Physics</button>
+<button class="filter-chip px-lg py-sm rounded-lg text-label-md font-label-md bg-surface-container hover:bg-surface-container-high border border-outline-variant">Bio-Engineering</button>
+<button class="filter-chip px-lg py-sm rounded-lg text-label-md font-label-md bg-surface-container hover:bg-surface-container-high border border-outline-variant">Neural Networks</button>
+</div>
+</div>
+</header>
+<!-- Bento Grid of Researcher Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group">
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-primary/10 text-primary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            98% Match
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a senior research scientist with a confident expression. She is in a modern, brightly lit laboratory environment with blurred glassware and digital screens in the background. The lighting is soft and neutral, emphasizing a clean and professional academic atmosphere with high-key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFv1eOEDZvVAPBnoBRldPziJEhK-l3DktmWlniT7khFipGdQ7Edli8XsTVvjdYEmZ4atfprlyQQJ3pgrwIVh0sTYn3452VknrlHvEMrmuQA5Iv3mGZ8NH3P5UxK_gQSkv6yRye-s0iFusHfzYzSLMLWONh_tYRxcR5VYUOAWKSK8jYetw15x2NHL5NXFPtdduLO8DNKZUniSBHG4NX40YdtfnCoOuT3RaVec7v1plCxCa-hPdXt9JjkifUfcvk6hvaJQ_7QT1gRXs"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Dr. Elena Rodriguez</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">Senior Neuroscientist, Stanford</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Specializing in synaptic plasticity and AI-driven neural mapping. Currently leading Project Axon.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Synaptic Plasticity</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Python</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">+3</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Palo Alto, CA
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group">
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-primary/10 text-primary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            92% Match
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A focused portrait of a male researcher in a tech-centric workspace. He is wearing a dark navy knit sweater, and the background features subtle blue and purple ambient lighting from server racks. The image is crisp, with a modern minimalist aesthetic and a cool color palette reflecting a high-tech research environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnAOVPcfnZT6qZHKkBNWtEtivOxwDIwe0hWiN8eVLIONqtGaKJH3xK7ji5zlBwe7sYuh4qXbJexUPmTtGZxToNGQ9lHvr3pXrlmOfEIlVzmIS6DJf0FkSCAY7ERtsRI1nka3PqLP0yf1_ARbQO_nv8Rl-6_tqK8PGd7rD0l8zgwKkeCWk1sJ_eBChH5Y5Z6ygxAYmpPkAUMMnYBGKi473UafoHYBj0HW86Gu_GZSFAa8T6AZjvdl5mZg3h5zg50YI_JDxA9MXNwdo"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Prof. Liam Chen</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">Quantum Computing Lead, MIT</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Expert in error correction for superconducting qubits and high-fidelity gate operations.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Quantum Gates</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Qiskit</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">C++</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Cambridge, MA
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group">
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-primary/10 text-primary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            89% Match
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young female academic in a bright, modern library setting. Warm sunlight filters through large windows, illuminating the shelves of books behind her. She has a thoughtful expression, wearing a minimalist grey blazer. The overall mood is scholarly, serene, and sophisticated, with a warm-toned neutral color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxpy4VTkj9MdQ5jl7pPXQEwlBpz3p78mdar06BgYpGLrHePlwjuWhoPpl6lsCBqOJF2SaeF70OEDRTICBRRbR2zRuif5EYD5e-YAQ8hY-3QNkf4jLZi5F2nUc5xuoX9bGYqVioB_hfxgOXQZf_K1EUE-Kd5XswdzI4xuZdI3m5WSfgh7I_Dgu5_zzIQPVhuQiGlNKeIpjBkzmj9Kfhs_jDUlMhScxu2D_ULSXtaHbEIOfJUdYN3U59tMttrjrDhqPKMFgOt35Uy60"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Dr. Sarah Jenkins</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">Director of Bio-Ethics, Oxford</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Evaluating the sociotechnical impacts of generative AI on public discourse and policy.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Ethics</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Policy</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Sociology</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Oxford, UK
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+<!-- Card 4 (AI Feature Highlight) -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group ring-1 ring-primary/20">
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none">
+
+</div>
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-secondary/10 text-secondary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            Top AI Pick
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male data scientist with glasses, looking directly at the camera with a slight smile. The background is a clean, white office space with minimalist wooden furniture and a few green plants. The lighting is natural and bright, conveying a sense of transparency, intelligence, and modern workplace elegance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrUgNOh3lS2lj-ndaTKF0yYvjirWGa22rPpIYecs2xYqKGveG7xUBDfRuWAfUNeOpauBlWVrkpIssWvxsTGVEGcPNGm-9bozgwnouGB9q9IlKAndorK2bMN2Rw9RmVJD5tzs5BBl9utWn4-yGgetnHGzUTgFZ9IZbvWyF3FpddTHwltRTkTeZtC-uin_4xSY-mlIT3Ge8YSq6pnaFvtev9CfrHalQrO6WnXh7tem-npvAtlj0oVggOqSDjIviiEzo2E6LPX6qhRkM"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Dr. James Wilson</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">NLP Specialist, ETH Zurich</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Developing transformer architectures for low-resource languages and cross-lingual transfer.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-primary/5 border border-primary/20 px-sm py-xs rounded font-label-md text-label-md text-primary">Transformers</span>
+<span class="bg-primary/5 border border-primary/20 px-sm py-xs rounded font-label-md text-label-md text-primary">PyTorch</span>
+<span class="bg-primary/5 border border-primary/20 px-sm py-xs rounded font-label-md text-label-md text-primary">NLP</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Zurich, CH
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group">
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-primary/10 text-primary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            84% Match
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female engineer with a determined look. She is in a high-tech manufacturing workshop with blurred machinery and industrial robots in the background. The lighting is dramatic but clean, with cool tones and industrial grey colors, highlighting her role in a cutting-edge technological field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrw9J_4AbErD4LX_ZKnPehA_sCMfiymPmMC1RrzCs3skhSADCeQVliEreUHhkZBmjRb9MxeVZ3o9vahUaqNSw2fnddLRNif78zXy2yeTELv9SKfeTlf671q-_iZRALRDD5TlvCdpnYx81osrc0tlcbZiI7apQXLlnvCf7DAyc-DKi7Q5aJTfmt3sH_oOu5oGHEQmezXTa0g_uqZWKT9THe6jchswtXmnrSPn1QtfzGlenXb_2kyOGkcj0289XUuHtBAa6EhWRr_RE"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Maya Ishikawa</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">Robotics Engineer, University of Tokyo</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Specializing in soft robotics and bio-mimetic actuation for deep-sea exploration.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Soft Robotics</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">CAD</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">ROS</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Tokyo, JP
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="researcher-card bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden group">
+<div class="absolute top-4 right-4 z-10">
+<div class="bg-primary/10 text-primary px-md py-xs rounded-full font-label-md text-label-md match-glow flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            81% Match
+                        </div>
+</div>
+<div class="flex items-start gap-md mb-md">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male researcher with a beard, dressed in a simple white t-shirt, sitting in a bright, modern studio. Behind him is a large abstract digital art piece with vibrant primary colors. The lighting is soft and flat, emphasizing the artistic and creative side of his technological research. The aesthetic is clean and modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOz5UCUekwHOA7ZVai8UZOIOQ7AQyIEG3pTmL27l7ktI1wARz2Eq2zSs3UG7QQEZmsYOnLfX-4fIm6TuCDjibbkkBj_nN3cGA7xRu6fK4NdDAfXfkMP5bI3sQ3F7k1tUzSKFh3BNrO-VRnY5162oJRp0S0Xa14AQ7ZCApgILsZQh7D3E-nnGQO9FmL1fZeNd3uG3e3njy4LXyao2TKvpZThnsbTxxW-POo0BG0I2tgiKo_RHb8MM5jQFWxYnod6jv_TX0G83ABPzY"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Alexei Volkov</h4>
+<p class="text-on-surface-variant font-label-md text-label-md">Cryptography Lead, Berlin Tech</p>
+</div>
+</div>
+<p class="text-on-surface-variant text-body-md line-clamp-2 mb-md">Focusing on zero-knowledge proofs and privacy-preserving computation for global networks.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">ZK-Proofs</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Rust</span>
+<span class="bg-surface-container-high px-sm py-xs rounded font-label-md text-label-md text-on-surface-variant">Security</span>
+</div>
+<div class="mt-auto flex items-center justify-between pt-md border-t border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Berlin, DE
+                        </span>
+<button class="premium-btn text-white px-lg py-sm rounded-lg font-label-md text-label-md">Connect</button>
+</div>
+</div>
+</div>
+<!-- Footer Section -->
+<footer class="mt-giant pt-xl border-t border-outline-variant flex flex-col md:flex-row justify-between items-start gap-lg max-w-container-max mx-auto">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">ResearchHub AI</span>
+<p class="text-on-surface-variant/50 font-body-sm text-body-sm mt-sm">© 2024 ResearchHub AI. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap gap-lg">
+<a class="text-on-surface-variant/50 hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Privacy</a>
+<a class="text-on-surface-variant/50 hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Terms</a>
+<a class="text-on-surface-variant/50 hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Twitter</a>
+<a class="text-on-surface-variant/50 hover:text-primary transition-colors font-label-sm text-label-sm" href="#">LinkedIn</a>
+</div>
+</footer>
+</main>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Tab highlight logic
+        const chips = document.querySelectorAll('.filter-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('active', 'bg-primary', 'text-white');
+                    c.classList.add('bg-surface-container', 'hover:bg-surface-container-high');
+                });
+                chip.classList.add('active', 'bg-primary', 'text-white');
+                chip.classList.remove('bg-surface-container', 'hover:bg-surface-container-high');
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchContainer = searchInput.parentElement;
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('ring-2', 'ring-primary/20', 'border-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('ring-2', 'ring-primary/20', 'border-primary');
+        });
+    </script>
+</body></html>
